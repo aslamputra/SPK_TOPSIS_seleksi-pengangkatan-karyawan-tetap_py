@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<h4>Hasil Ranking</h4>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Alternatif</th>
+            <th>Skor</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for nama, skor in result %}
+        <tr>
+            <td>{{ nama }}</td>
+            <td>{{ '{:.4f}'.format(skor) }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if result %}
+<div class="alert alert-success mt-4">
+    <h5>✅ {{ result[0][0] }} terpilih sebagai <strong>Karyawan Tetap</strong> dengan skor tertinggi <strong>{{ '{:.4f}'.format(result[0][1]) }}</strong>.</h5>
+</div>
+{% endif %}
+
+{% endblock %}

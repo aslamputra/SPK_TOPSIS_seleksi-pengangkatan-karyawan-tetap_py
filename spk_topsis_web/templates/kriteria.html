@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="alert alert-warning">
+      {% for message in messages %}
+        <div>{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<h4>Daftar Kriteria</h4>
+
+<form method="POST" action="/kriteria/add" class="mb-3">
+    <input type="text" name="nama" placeholder="Nama" required>
+    <input type="number" step="0.01" name="bobot" placeholder="Bobot" required>
+    <select name="atribut">
+        <option value="benefit">Benefit</option>
+        <option value="cost">Cost</option>
+    </select>
+    <button type="submit">Tambah</button>
+</form>
+
+<table class="table">
+    <tr><th>Nama</th><th>Bobot</th><th>Atribut</th><th>Aksi</th></tr>
+    {% for k in data %}
+    <tr>
+        <form method="POST" action="/kriteria/edit/{{ k.id }}">
+            <td><input name="nama" value="{{ k.nama_kriteria }}"></td>
+            <td><input type="number" step="0.01" name="bobot" value="{{ k.bobot }}"></td>
+            <td>
+                <select name="atribut">
+                    <option value="benefit" {% if k.atribut == 'benefit' %}selected{% endif %}>Benefit</option>
+                    <option value="cost" {% if k.atribut == 'cost' %}selected{% endif %}>Cost</option>
+                </select>
+            </td>
+            <td>
+                <button class="btn btn-sm btn-warning" type="submit">Update</button>
+                <a href="/kriteria/delete/{{ k.id }}" class="btn btn-sm btn-danger" onclick="return confirm('Hapus data ini?')">Hapus</a>
+            </td>
+        </form>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
