@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<h4>Data Nilai Alternatif</h4>
+<a href="{{ url_for('nilai_add_form') }}" class="btn btn-primary mb-3">+ Tambah Nilai</a>
+
+<div class="row">
+  {% for group in grouped %}
+  <div class="col-md-6">
+    <div class="card mb-4">
+      <div class="card-header">
+        <strong>{{ group.nama_alternatif }}</strong>
+      </div>
+      <div class="card-body">
+        <ul class="list-group">
+          {% for item in group.nilai_list %}
+          <li class="list-group-item d-flex justify-content-between">
+            <span>{{ item.nama_kriteria }}</span>
+            <span>{{ item.nilai }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+        <div class="mt-3 text-end">
+          <a href="{{ url_for('nilai_edit', id=group.id_alternatif) }}" class="btn btn-sm btn-warning">Edit</a>
+          <a href="{{ url_for('nilai_delete', id=group.id_alternatif) }}" class="btn btn-sm btn-danger" onclick="return confirm('Hapus semua nilai alternatif ini?')">Delete</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
